@@ -1,0 +1,16 @@
+                                                     List of databases
+    Name    |    Owner     | Encoding | Locale Provider | Collate | Ctype | ICU Locale | ICU Rules |   Access privileges    
+------------+--------------+----------+-----------------+---------+-------+------------+-----------+------------------------
+ Thursday   | shahidnaseem | UTF8     | libc            | en_IN   | en_IN |            |           | 
+ odoo_12/10 | shahidnaseem | UTF8     | libc            | en_IN   | en_IN |            |           | 
+ odoo_mydb  | postgres     | UTF8     | libc            | en_IN   | en_IN |            |           | =Tc/postgres          +
+            |              |          |                 |         |       |            |           | postgres=CTc/postgres +
+            |              |          |                 |         |       |            |           | odoo_mydb=CTc/postgres
+ postgres   | postgres     | UTF8     | libc            | en_IN   | en_IN |            |           | 
+ root       | kasim        | UTF8     | libc            | en_IN   | en_IN |            |           | 
+ template0  | postgres     | UTF8     | libc            | en_IN   | en_IN |            |           | =c/postgres           +
+            |              |          |                 |         |       |            |           | postgres=CTc/postgres
+ template1  | postgres     | UTF8     | libc            | en_IN   | en_IN |            |           | =c/postgres           +
+            |              |          |                 |         |       |            |           | postgres=CTc/postgres
+(7 rows)
+

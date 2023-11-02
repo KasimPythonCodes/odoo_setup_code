@@ -1,0 +1,10 @@
+.img{
+height: 50px;
+width:50px;
+border:25px;
+
+}
+.img-responsive{
+border-radius: 50%;
+
+}

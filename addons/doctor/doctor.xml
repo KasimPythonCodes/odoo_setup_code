@@ -1,85 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-<!--    START ADD CSS FILES-->
-          <template id="assets_backend" name="document assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <link type="text/css" src="/doctor/view/css/style.css" />
-            </xpath>
-        </template>
+    <!--    START ADD CSS FILES-->
+<!--    <template id="assets_backend" name="document assets" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link type="text/css"  src="/doctor/view/css/style.css" />-->
+<!--        </xpath>-->
+<!--    </template>-->
 
-<!--    END ADD CSS FILES-->
+    <!--    END ADD CSS FILES-->
 
-<!--   START TREE VIEW-->
-      <record id="patient_tree" model="ir.ui.view">
+
+
+            <record id="action_aptient_appointment" model="ir.actions.act_window">
+            <field name="name">Patient Appointment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">patient.appointment</field>
+            <field name="domain">[('patient_id', '=', active_id)]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="doctor.patient_tree_appoint"/>
+            <field name="binding_model_id" ref="model_patient_appointment"/>
+        </record>
+
+
+
+
+    <!--   START TREE VIEW DOCTOR-->
+    <record id="patient_tree" model="ir.ui.view">
         <field name="name">test.doctor.tree</field>
         <field name="model">test.doctor</field>
         <field name="arch" type="xml">
             <tree string="Doctor">
-                    <field name="sequence"/>
-                    <field class="im_id" name="doctor_image" widget='image' />
-                    <field name="doctor_name"/>
-                    <field name="doctor_age"/>
-                    <field name="doctor_department"/>
-                    <field name="doctor_gender"/>
+                <field name="sequence"/>
+                <field class="im_id" name="doctor_image" widget='image'/>
+                <field name="doctor_name"/>
+                <field name="doctor_age"/>
+                <field name="doctor_department"/>
+                <field name="doctor_gender"/>
             </tree>
         </field>
     </record>
-<!--   END TREE VIEW-->
+    <!--   END TREE VIEW DOCTOR-->
 
-<!-- START FORM VIEW -->
+     <!--   START TREE VIEW PATIENT-->
+    <record id="patient_tree_appoint" model="ir.ui.view">
+        <field name="name">patient.appointment.tree</field>
+        <field name="model">patient.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Patient">
+                <field name="patient_sequence"/>
+                <field class="im_id" name="patient_image" widget='image'/>
+                <field name="patient_name"/>
+                <field name="patient_age"/>
+                <field name="patient_gender"/>
+                <field name="patient_appoint_id"/>
+                <field name="doctor_gender"/>
+
+
+            </tree>
+        </field>
+    </record>
+    <!--   END TREE VIEW PATIENT-->
+
+      <!-- START FORM VIEW PATIENT -->
+    <record id="patient_form_appoint" model="ir.ui.view">
+        <field name="name">patient.appointment.form</field>
+        <field name="model">patient.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <sheet>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="patient_sequence" readonly="1"/>
+                        </h1>
+
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="patient_image" widget="image"/>
+                            <field name="patient_name"/>
+                        </group>
+                        <group>
+                            <field name="patient_age"/>
+                            <field name="patient_gender"/>
+                            <field name="doctor_gender"/>
+
+                        </group>
+
+                        <group>
+                            <field name="patient_appoint_id" options="{'no_create_edit':True}"/>
+                        </group>
+                    </group>
+
+<!--&lt;!&ndash;    Appoint Doctor&ndash;&gt;-->
+<!--                    <notebook>-->
+<!--                        <page string="Appointment">-->
+<!--                            <field name="appointment_doctor_id" >-->
+<!--                            <tree editable="bottom">-->
+<!--&lt;!&ndash;                      <field name="product_id"/>&ndash;&gt;-->
+<!--                            <field name="product_qty"/>-->
+<!--                            <field name="appointment_id" invisible="1" options="'{no_create_edit:True}'"/>-->
+<!--                            </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+
+<!--&lt;!&ndash;    Appoint Doctor&ndash;&gt;-->
+
+                </sheet>
+
+                <!-- START ADD CHATTER Doctor-->
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread" options="{'post_refresh':'recipients'}"/>-->
+<!--                </div>-->
+                <!-- END ADD CHATTER Doctor-->
+            </form>
+        </field>
+    </record>
+
+<!--    END FORM PATIENT-->
+
+
+    <!-- START FORM VIEW DOCTOR -->
     <record id="patient_form" model="ir.ui.view">
         <field name="name">test.doctor.form</field>
         <field name="model">test.doctor</field>
         <field name="arch" type="xml">
+            <header>
+                <button name="%(doctor.create_appointment_wizard)d" string="Create Appointment"  type="action"  class="oe_highlight"
+                context="{'default_patient_id':active_id}"/>
+
+            </header>
             <form string="Doctor">
-            <sheet>
-                <div class="oe_title">
-                    <h1>
-                        <field name="sequence" readonly="1"/>
-                    </h1>
+                <sheet>
 
-                </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="sequence" readonly="1"/>
+                        </h1>
 
-                <group>
+                    </div>
+
                     <group>
-                    <field name="doctor_image" widget="image" />
-                    <field name="doctor_name"/>
-                    </group>
-                    <group>
-                        <field name="doctor_age"/>
-                    </group>
+                        <group>
+                            <field name="doctor_image" widget="image"/>
+                            <field name="doctor_name"/>
+                        </group>
+                        <group>
+                            <field name="doctor_age"/>
+                        </group>
                         <group>
                             <field name="doctor_department"/>
                         </group>
-                            <group>
-                                    <field name="doctor_gender"/>
-                            </group>
-                    <group>
+                        <group>
+                            <field name="doctor_gender"  />
+                        </group>
+                        <group>
 
+                        </group>
                     </group>
-                </group>
-            </sheet>
 
-            <!-- START ADD CHATTER -->
-            <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers" />
-                <field name="activity_ids" widget="mail_activity"/>
-                <field name="message_ids" widget="mail_thread" options="{'post_refresh':'recipients'}"/>
-            </div>
-            <!-- END ADD CHATTER -->
+<!--    Appoint Doctor-->
+                    <notebook>
+                        <page string="Appointment">
+                            <field name="appointment_doctor_id" >
+                            <tree editable="bottom">
+<!--                        <field name="product_id"/>-->
+                            <field name="patient_appointmentid_id"/>
+                            <field name="appointment_id" invisible="1" options="{'no_create_edit':True}"/>
+                            </tree>
+                            </field>
+                        </page>
+                    </notebook>
 
-            
+<!--    Appoint Doctor-->
 
+                </sheet>
 
-
-
+                <!-- START ADD CHATTER Doctor-->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh':'recipients'}"/>
+                </div>
+                <!-- END ADD CHATTER Doctor-->
             </form>
         </field>
     </record>
-<!-- END FORM VIEW -->
 
-<!--   START ADD DATA MODULE-->
+<!--    END FORM DOCTOR-->
+
+    <!--  START SEARCH IN ODOO PANEL Doctor-->
+
+    <record id="test_doctor_search" model="ir.ui.view">
+        <field name="name">test.doctor.search</field>
+        <field name="model">test.doctor</field>
+        <field name="arch" type="xml">
+            <search string="search doctor">
+                <field name="doctor_name" filter_domain="['|',('doctor_name', 'ilike', self),('sequence', 'ilike', self)]"/>
+                <field name="sequence"/>
+                <field name="doctor_name"/>
+<!--                <separator/>-->
+<!--                <filter string="Male" name="male" domain="[('patient_gender', '=', 'male')]"/>-->
+<!--                <filter string="Female" name="female" domain="[('patient_gender', '=', 'female')]"/>-->
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="Gender" name="patient_gender" context="{'group_by':'patient_gender'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <!--  END SEARCH IN ODOO PANEL Doctor-->
+
+
+    <!-- END FORM VIEW -->
+
+    <!--   START ADD DATA MODULE-->
     <record id="action_patient_doctor" model="ir.actions.act_window">
         <field name="name">Doctor</field>
         <field name="type">ir.actions.act_window</field>
@@ -92,14 +233,31 @@
             </p>
         </field>
     </record>
-<!--   END ADD DATA MODULE-->
+    <!--   END ADD DATA MODULE-->
 
+     <!--   2 START ADD DATA MODULE-->
+    <record id="action_patient_doctor_appoint" model="ir.actions.act_window">
+        <field name="name">Patient</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">patient.appointment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your First Patient !
+            </p>
+        </field>
+    </record>
+    <!--   END ADD DATA MODULE-->
 
 
     <!-- START CREATING MENUS -->
 
     <menuitem id="doctor_root" name="Hospital" sequence="1"/>
     <menuitem id="doctor_patient" name="Doctor" parent="doctor_root" action="action_patient_doctor"/>
+    <menuitem id="doctor_patient_appoint" name="Patient" parent="doctor_root" action="action_patient_doctor_appoint"/>
+    <menuitem id="doctor_patient_appointment_wizard" name="Create Appointment" parent="doctor_root" action="create_appointment_wizard"/>
+
     <!-- END CREATING MENUS -->
 
 </odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Load Reports File -->
+      <report
+      id="report_doctor_card"
+      string="Doctor OverView"
+      model="test.doctor"
+      report_type="qweb-pdf"
+      name="doctor.report_doctor_ids"
+      file="doctor.report_doctor_ids"
+      />
+
+  </data>
+</odoo>

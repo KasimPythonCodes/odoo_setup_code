@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Load Reports File -->
+      <report
+      id="report_hospital_patient_card"
+      string="Patient PDF"
+      model="hospital.patient"
+      report_type="qweb-pdf"
+      name="hospital.report_hospital_patient_ids"
+      file="hospital.report_hospital_patient_ids"
+      />
+
+    <report
+      id="report_appointment_id"
+      string="Appointment PDF"
+      model="hospital.appointment"
+      report_type="qweb-pdf"
+      name="hospital.report_appointment_ids"
+      file="hospital.report_appointment_ids"
+      />
+
+    <report
+            id="report_patient_id"
+            string="Patient Execl"
+            model="hospital.patient"
+            report_type="xlsx"
+            name="hospital.report_patient_xls"
+            file="hospital.report_patient_xls"
+    />
+
+</odoo>

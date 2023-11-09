@@ -1,0 +1,338 @@
+<odoo>
+    <!--  Invoice PDF Report Template  -->
+    <template id="report_invoice_template">
+        <!--         <t t-call="web.html_container"> -->
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <!--  Header  -->
+                    <h3 style="text-align: center;">
+                        <strong>TAX INVOICE</strong>
+                    </h3>
+                    <!--  Body  -->
+                    <div class="content" style="margin: 20px; border: 1px solid black;">
+                        <div style="border: 1px solid black;">
+                            <div style="float: left; border-right: 1px solid black; width: 397px; height: 300px">
+                                <div style="border-bottom: 1px solid black; width: 397px; height: 140px">
+                                    <strong>
+                                        <span t-esc="o.company_id.name"/>
+                                    </strong>
+                                    <span t-esc="o.company_id.street"/>
+                                    <br/>
+                                    <span t-esc="o.company_id.street2"/>
+                                    <br/>
+                                    GSTIN/UIN:
+                                    <span t-esc="o.company_id.vat"/>
+                                    <br/>
+                                    State Name:
+                                    <span t-esc="o.company_id.state_id.name"/>
+                                    <br/>
+                                    CIN:
+                                    <span t-esc="o.company_id.company_registry"/>
+                                    <br/>
+                                    Email:
+                                    <span t-esc="o.company_id.email"/>
+                                </div>
+                                <div>
+                                    <strong>
+                                        <span t-esc="o.partner_id.name"/>
+                                    </strong>
+                                    <span t-esc="o.partner_id.street"/>
+                                    <br/>
+                                    <span t-esc="o.partner_id.street2"/>
+                                    <br/>
+                                    GSTIN/UIN:
+                                    <span t-esc="o.partner_id.vat"/>
+                                    <br/>
+                                    State Name:
+                                    <span t-esc="o.partner_id.state_id.name"/>
+                                    <br/>
+                                    Email:
+                                    <span t-esc="o.partner_id.email"/>
+                                </div>
+                            </div>
+                            <div style="float: right">
+                                <div style="float: left; border-right: 1px solid black; width: 198.5px; height: 200px">
+                                    <p style="border-bottom: 1px solid black; width: 198.5px; height: 30px; font-size: 12px;">
+                                        <strong>Invoice No.</strong>
+                                        <br/>
+                                        <span t-esc="o.number"/>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Delivery Note</strong>
+                                        <br/>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Supplier's Ref.</strong>
+                                        <br/>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Buyer's Order No.</strong>
+                                        <br/>
+                                    </p>
+                                    <p style="border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        Despath Document No.
+                                        <br/>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Depatched through</strong>
+                                        <br/>
+                                    </p>
+                                </div>
+                                <div style="float: right; width: 198.5px; height: 180px">
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 30px">
+                                        <strong>Dated</strong>
+                                        <br/>
+                                        <span t-esc="o.date_invoice"/>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Mode/Terms Of Payment</strong>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Other Reference(s)</strong>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Dated</strong>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Delivery Note Date</strong>
+                                    </p>
+                                    <p style="font-size: 12px; border-bottom: 1px solid black; width: 198.5px; height: 24px">
+                                        <strong>Destination</strong>
+                                    </p>
+                                </div>
+                                <div>Terms Of Delivery</div>
+                            </div>
+                        </div>
+                        <div>
+                            <table style="width: 100%;">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid black; border-top: 1px solid black">
+                                        <th style="border-right: 1px solid black; width: 5%; text-align: center;">S.No
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 40%; text-align: center;">
+                                            Description of Goods
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 15%; text-align: center;">
+                                            HSN/SAC
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 15%; text-align: center;">
+                                            Quantity
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 10%; text-align: center;">
+                                            Rate
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 5%; text-align: center;">per
+                                        </th>
+                                        <th style="border-right: 1px solid black; width: 10%; text-align: center;">
+                                            Amount
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <tr>
+                                            <td style="border-right: 1px solid black; width: 5%; text-align: center">
+                                                <span t-esc="count"/>
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 40%; text-align: left;">
+                                                <strong>
+                                                    <span t-esc="barcode"/>
+                                                </strong>
+                                                <br/>
+                                                <span t-esc="line.name"/>
+                                                <br/>
+                                                <span t-esc="line.product_id.description"/>
+                                                <br/>
+                                                ITEM CODE:
+                                                <span t-esc="line.product_id.default_code"/>
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 15%; text-align: left;">
+                                                <span t-esc="line.product_id.l10n_in_hsn_code"/>
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 15%; text-align: right;">
+                                                <span t-esc="line.quantity"/>
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 10%; text-align: right;">
+                                                <span t-esc="line.price_unit"/>
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 5%; text-align: right;">
+                                                nos
+                                            </td>
+                                            <td style="border-right: 1px solid black; width: 10%; text-align: right;">
+                                                <span t-esc="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <br/>
+                                    <br/>
+                                    <tr>
+                                        <td style="border-right: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; width: 40%;"/>
+                                        <td style="border-right: 1px solid black; width: 15%;"/>
+                                        <td style="border-right: 1px solid black; width: 15%;"/>
+                                        <td style="border-right: 1px solid black; width: 10%;"/>
+                                        <td style="border-right: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; width: 10%;">
+                                            <span t-esc="o.amount_untaxed"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 40%; text-align: right;">
+                                            <strong>
+                                                <i>Output GST @ 18%</i>
+                                            </strong>
+                                        </td>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 15%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 15%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 10%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 10%;">
+                                            <span t-esc="o.amount_tax"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid black; width: 100%">
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 40%; text-align: right;">
+                                            Total
+                                        </td>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 15%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 15%;">
+                                            <strong>
+                                                <span t-esc="o.total_quantity"/>
+                                                nos
+                                            </strong>
+                                        </td>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 10%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 5%;"/>
+                                        <td style="border-right: 1px solid black; border-bottom: 1px solid black; width: 10%;">
+                                            <span t-esc="o.amount_total"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div style="border-bottom: 1px solid-black; width: 794px;">
+                                Amount Chargeable(in words)
+                                <br/>
+                                <strong>
+                                    Indian Rupees
+                                    <span t-esc="o.total_amount_in_words"/>
+                                    Only
+                                </strong>
+                            </div>
+                            <div>
+                                <table style="width: 100%;">
+                                    <tr style=" border-top: 1px solid black; border-bottom: 1px solid black">
+                                        <th rowspan="2"
+                                            style="border-right: 1px solid black; width: 50%; text-align: center;">
+                                            HSN/SAC
+                                        </th>
+                                        <th rowspan="2"
+                                            style="border-bottom: 1px solid black; width: 15%; text-align: center;">
+                                            Taxable
+                                        </th>
+                                        <th colspan="2"
+                                            style="border-left: 1px solid black; border-bottom: 1px solid black; border-right: 1px solid black; width: 20%;">
+                                            Integrated Tax
+                                        </th>
+                                        <th rowspan="2"
+                                            style="border-right: 1px solid black; width: 15%; text-align: center;">Total
+                                            Tax Amount
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <!--                                         <td style="border-right: 1px solid black; width: 50%;"></td> -->
+                                        <!--                                         <td style="border-right: 1px solid black; width: 15%;"></td> -->
+                                        <td style="border-right: 1px solid black; border-left: 1px solid black; text-align: center;border-bottom: 1px solid black;">
+                                            Rate
+                                        </td>
+                                        <td style="border-right: 1px solid black; text-align: center; border-bottom: 1px solid black;">
+                                            Amount
+                                        </td>
+                                        <!--                                         <td style="border-right: 1px solid black; width: 15%;"></td> -->
+                                    </tr>
+                                    <tbody>
+                                        <t t-foreach="o.invoice_line_ids" t-as="line">
+                                            <tr>
+                                                <td style="border-right: 1px solid black; width: 50%; text-align: left;">
+                                                    <span t-esc="line.product_id.l10n_in_hsn_code"/>
+                                                </td>
+                                                <td style="border-right: 1px solid black; width: 15%; text-align: right">
+                                                    <span t-esc="line.price_unit"/>
+                                                </td>
+                                                <td style="border-right: 1px solid black; width: 10%; text-align: left;">
+                                                    <span t-esc="line.invoice_line_tax_ids.amount"/>
+                                                </td>
+                                                <td style="border-right: 1px solid black; width: 10%; text-align: left;">
+                                                    <span t-esc="line.tax_amount_each"/>
+                                                </td>
+                                                <td style="border-right: 1px solid black; width: 15%; text-align: left;">
+                                                    <span t-esc="line.tax_amount_each"/>
+                                                </td>
+                                            </tr>
+                                            <br/>
+                                        </t>
+                                        <tr>
+                                            <td style="border: 1px solid black; width: 50%; text-align: right;">
+                                                <b>Total</b>
+                                            </td>
+                                            <td style="border: 1px solid black; width: 10%; text-align: right">
+                                                <b>
+                                                    <span t-esc="o.amount_untaxed"/>
+                                                </b>
+                                            </td>
+                                            <td style="border: 1px solid black; width: 30%; text-align: left;"></td>
+                                            <td style="border: 1px solid black; width: 30%; text-align: left;">
+                                                <b>
+                                                    <span t-esc="o.amount_tax"/>
+                                                </b>
+                                            </td>
+                                            <td style="border: 1px solid black; width: 10%: text-align: center;">
+                                                <b>
+                                                    <span t-esc="o.amount_tax"/>
+                                                </b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div style="border-top: 1px solid black;">
+                                    Tax Amount (in words):
+                                    <strong>
+                                        Indian Rupees
+                                        <span t-esc="o.taxed_amount_in_words"/>
+                                        Only
+                                    </strong>
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div style="float: right; border-top: 1px solid black; border-left: 1px solid black; width: 40%; height: 80px;">
+                                    <strong>
+                                        <p style="text-align: right">
+                                            for
+                                            <span t-esc="o.company_id.name"/>
+                                        </p>
+                                    </strong>
+                                    <br/>
+                                    <p style="text-align: right">Authorised Signatory</p>
+                                </div>
+                                Company's PAN :
+                                <span t-esc="o.company_id.name"/>
+                                <br/>
+                                <u>Declaration</u>
+                                <br/>
+                                We declare that this invoice shows the actual price of the
+                                <br/>
+                                goods described and that all particulars are true and correct
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+        <!--         </t> -->
+    </template>
+<!--        <menuitem id="sale.menu_sale_order" name="New Orders" action="sale.action_orders" parent="hospital_root"-->
+<!--              sequence="2" groups="sales_team.group_sale_salesman"/>-->
+</odoo>

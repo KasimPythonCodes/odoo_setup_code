@@ -1,0 +1,137 @@
+<odoo>
+    <record id="purchase_rfq_tree" model="ir.ui.view">
+        <field name="name">purchase.rfq.tree</field>
+        <field name="model">purchase.rfq</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field" position="after">
+                <field name="rfq_sequence"/>
+                <field name="name"/>
+                <field name="state"/>
+                <!--                     <field name="date_order"/> -->
+                <field name="partner_id"/>
+                <field name="company_id" options="{'no_create': True}"/>
+                <!--                     <field name="date_planned" invisible="context.get('quotation_only', False)"/> -->
+                <!--                     <field name="origin"/> -->
+                <!--                     <field name="invoice_status" invisible="not context.get('show_purchase', True)"/> -->
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase_rfq_form" model="ir.ui.view">
+        <field name="name">purchase.rfq.form.inherited</field>
+        <field name="model">purchase.rfq</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_confirm']" position="replace">
+                <button name="action_confirm_order" string="Confirm Order" type="object"/>
+            </xpath>
+            <xpath expr="//button[@name='action_confirm_order']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', '!=', 'draft')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="widget">statusbar</attribute>
+                <attribute name="statusbar_visible">q_recd,awarded</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="sel_quotation"/>
+            </xpath>
+            <xpath expr="//notebook" position="replace">
+                <notebook>
+                    <page string="Products">
+                        <field name="quotation_line" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                            <tree string="Quotation Request Lines" editable="bottom">
+                                <field name="currency_id" invisible="1"/>
+                                <field name="state" invisible="1"/>
+                                <field name="invoice_lines" invisible="1"/>
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id"
+                                       attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                                       context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
+                                       force_save="1"/>
+                                <field name="name"/>
+                                <field name="move_dest_ids" invisible="1"/>
+                                <field name="req_qty"/>
+                                <field name="ord_qty"/>
+                                <field name="tot_qty"/>
+                                <field name="date_planned"/>
+                                <!--                                  <field name="company_id" groups="base.group_multi_company"  -->
+                                <!--                                         options="{'no_create': True}"/>  -->
+                                <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}"
+                                       groups="purchase.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
+                                       widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <field name="product_qty" invisible="1"/>
+                                <!--                                  <field name="qty_received" invisible="not context.get('show_purchase', True)"/>  -->
+                                <!--                                  <field name="qty_invoiced" invisible="not context.get('show_purchase', True)"/>  -->
+                                <field name="product_uom" groups="product.group_uom"
+                                       attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"
+                                       force_save="1"/>
+                                <field name="price_unit" attrs="{'readonly': [('invoice_lines', '!=', [])]}"/>
+                                <field name="taxes_id" widget="many2many_tags"
+                                       domain="[('type_tax_use','=','purchase')]"
+                                       context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}"/>
+                                <field name="price_subtotal" widget="monetary"/>
+                            </tree>
+                            <form string="Purchase Order Line">
+                                <sheet>
+                                    <field name="state" invisible="1"/>
+                                    <group>
+                                        <group>
+                                            <field name="product_id" context="{'partner_id': parent.partner_id}"/>
+                                            <label for="product_qty"/>
+                                            <div>
+                                                <field name="product_qty" class="oe_inline"/>
+                                                <span class="oe_inline"/>
+                                                <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                            </div>
+                                            <field name="price_unit"/>
+                                        </group>
+                                        <group>
+                                            <field name="taxes_id" widget="many2many_tags"
+                                                   domain="[('type_tax_use', '=', 'purchase')]"
+                                                   options="{'no_create': True}"/>
+                                            <field name="date_planned" widget="date"/>
+                                            <field name="account_analytic_id" colspan="2"
+                                                   groups="purchase.group_analytic_accounting"/>
+                                            <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
+                                                   widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                            <field name="company_id" groups="base.group_multi_company"
+                                                   options="{'no_create': True}"/>
+                                        </group>
+                                    </group>
+                                    <notebook>
+                                        <page string="Notes">
+                                            <field name="name"/>
+                                        </page>
+                                        <page string="Invoices and Incoming Shipments">
+                                            <field name="invoice_lines"/>
+                                            <field name="move_ids"/>
+                                            <field name="move_dest_ids" invisible="1"/>
+                                        </page>
+                                    </notebook>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+    <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+        <field name="name">Requests for Quotation</field>
+        <field name="res_model">purchase.rfq</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--          <field name="view_id" ref="purchase.purchase_order_tree"/>  -->
+        <field name="view_ids"
+               eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('om_hospital.purchase_rfq_tree')}), (0, 0, {'view_mode': 'form', 'view_id': ref('om_hospital.purchase_rfq_form')}), ]"/>
+        <field name="target">current</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">Create a new Request for Quotation.</p>
+        </field>
+    </record>
+
+    <menuitem id="hospital_purchase_rqf" name="Purchase" parent="hospital_root" action="purchase.purchase_rfq" sequence="20"/>
+
+</odoo>

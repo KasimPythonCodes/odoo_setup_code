@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_hospital_patient" model="mail.template">
+            <field name="name">OM Hospital Email Template</field>
+            <field name="model_id" ref="hospital.model_hospital_patient"/>
+            <field name="subject">Your Subject</field>
+            <field name="email_from">your-email@example.com</field>
+            <field name="email_to">${object.patient_email}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                <!-- Your email content here -->
+                <p>Dear ${object.patient_name},</p>
+                <p>This is an email template for your hospital.</p>
+                <!-- More content here -->
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    <data>-->
+<!--        <record id="email_template_hospital_patient" model="mail.template">-->
+<!--            <field name="name">Hospital Email Template</field>-->
+<!--            <field name="model_id" ref="hospital.model_hospital_patient"/>-->
+<!--            <field name="subject">Patient Card(Ref ${object.sequence})</field>-->
+<!--&lt;!&ndash;            <field name="email_from">your-email@example.com</field>&ndash;&gt;-->
+
+<!--            <field name="email_to">${object.patient_email}</field>-->
+<!--&lt;!&ndash;            <field name="auto_delete" eval="True"/>&ndash;&gt;-->
+<!--            <field name="body_html" type="html">-->
+<!--                <div style="margin: 0px: padding: 0px;">-->
+<!--                    <p style="margin: 0px; padding: 0px; font-size: 13px;">-->
+<!--                    Dear $(object.patient_name}-->
+<!--                        <br /><br />-->
+<!--                        Here is your patient name with reference id ${object,sequence}-->
+<!--                         <br /><br />-->
+<!--                        Your Age : ${object.patient_age})-->
+<!--                        <br /><br />-->
+<!--                        Gender : ${object.gender}-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </field>-->
+<!--            <field name="report_template" ref="report_doctor_card"/>-->
+<!--            <field name="report_name">Patient Card $((object.sequence))</field>-->
+<!--        </record>-->
+<!--    </data>-->
+<!--</odoo>-->

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="purchase_order_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="replace">
+                <field name="order_type"/>
+            </xpath>
+            <data>
+                <xpath expr="//notebook//field[@name='order_line']/ancestor::page" position="attributes">
+                    <attribute name="string">Products In</attribute>
+                </xpath>
+            </data>
+            <field name="company_id" position="after">
+                <field name="is_products"/>
+            </field>
+            <notebook>
+                <page string="Products Out">
+                    <field name="purchase_out_lines" attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
+                        <tree string="Purchase Order Lines" editable="bottom">
+                            <field name="currency_id" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="invoice_lines" invisible="1"/>
+                            <field name="sequence" widget="handle"/>
+                            <field name="product_id"
+                                   attrs="{'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))]}"
+                                   context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
+                                   force_save="1"/>
+                            <field name="name"/>
+                            <field name="move_dest_ids" invisible="1"/>
+                            <field name="date_planned"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="account_analytic_id" context="{'default_partner_id':parent.partner_id}"
+                                   groups="purchase.group_analytic_accounting"/>
+                            <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
+                                   widget="many2many_tags" options="{'color_field': 'color'}"/>
+                            <field name="product_qty"/>
+                            <field name="qty_received" invisible="not context.get('show_purchase', True)"/>
+                            <field name="qty_invoiced" invisible="not context.get('show_purchase', True)"/>
+                            <field name="product_uom" groups="product.group_uom"
+                                   attrs="{'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))]}"
+                                   force_save="1"/>
+                            <field name="price_unit" attrs="{'readonly': [('invoice_lines', '!=', [])]}"/>
+                            <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase')]"
+                                   context="{'default_type_tax_use': 'purchase'}" options="{'no_create': True}"/>
+                            <field name="price_subtotal" widget="monetary"/>
+                        </tree>
+                        <form string="Purchase Order Line">
+                            <sheet>
+                                <field name="state" invisible="1"/>
+                                <group>
+                                    <group>
+                                        <field name="product_id" context="{'partner_id': parent.partner_id}"/>
+                                        <label for="product_qty"/>
+                                        <div>
+                                            <field name="product_qty" class="oe_inline"/>
+                                            <span class="oe_inline"></span>
+                                            <field name="product_uom" groups="product.group_uom" class="oe_inline"/>
+                                        </div>
+                                        <field name="price_unit"/>
+                                    </group>
+                                    <group>
+                                        <field name="taxes_id" widget="many2many_tags"
+                                               domain="[('type_tax_use', '=', 'purchase')]"
+                                               options="{'no_create': True}"/>
+                                        <field name="date_planned" widget="date"/>
+                                        <field name="account_analytic_id" colspan="2"
+                                               groups="purchase.group_analytic_accounting"/>
+                                        <field name="analytic_tag_ids" groups="purchase.group_analytic_accounting"
+                                               widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                        <field name="company_id" groups="base.group_multi_company"
+                                               options="{'no_create': True}"/>
+                                    </group>
+                                </group>
+                                <notebook>
+                                    <page string="Notes">
+                                        <field name="name"/>
+                                    </page>
+                                    <page string="Invoices and Incoming Shipments">
+                                        <field name="invoice_lines"/>
+                                        <field name="move_ids"/>
+                                        <field name="move_dest_ids" invisible="1"/>
+                                    </page>
+                                </notebook>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="job_order_action" model="ir.actions.act_window">
+        <field name="name">Job Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your First Parameter !</p>
+        </field>
+    </record>
+
+    <menuitem id="job_order_menuitem" name="Job Order" parent="hospital_root" action="job_order_action" sequence="14"/>
+</odoo>

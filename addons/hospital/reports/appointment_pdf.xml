@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Create PDF Report-->
+    <template id="report_appointment_ids">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="oe_structure"/>
+                        <div class="row">
+                            <div class="col-xs-2" style="margin:auto;">
+                            </div>
+                            <center>
+                                <div class="col-xs-8" style="margin:auto">
+                                    <table class="table table-condensed" style="border: 3px solid black !important;">
+                                        <tr>
+                                            <td width="40%">
+
+                                                <p style="text-align:center;">
+                                                    <h2>
+
+                                                    </h2>
+                                                </p>
+                                            </td>
+                                            <td width="60%">
+
+                                                 <table>
+                                                    <tr>
+                                                        <td>
+                                                            <p style="text-align:right;">
+                                                                <strong>Id:</strong>
+                                                            </p>
+                                                            <p style="text-align:right;">
+                                                                <strong>Appointment Date:</strong>
+                                                            </p>
+                                                        </td>
+                                                        <td>
+                                                            <p style="text-align:left;padding-left:10px;"
+                                                               t-field="o.patient_id"/>
+                                                            <p style="text-align:left;padding-left:10px;"
+                                                               t-field="o.appointment_date"/>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+  <template id="report_patient_image" inherit_id="report_appointment_ids" primary="True">
+        <xpath expr="//table/tr/td[2]" position="replace">
+        </xpath>
+    </template>
+</odoo>

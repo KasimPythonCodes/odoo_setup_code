@@ -11,7 +11,6 @@ class HospitalPatient(models.Model):
     _description = 'Patient Record'
     _rec_name = 'patient_name'
     sequence = fields.Char(string='Patient Id', required=True, copy=False, readonly=True, index=True,default=lambda self: _('New'))
-    gender = fields.Selection([('male', 'Male'),('female', 'Female')])
     age_group = fields.Selection([('major','Major'),('minor','Minor')],string='Age Group',compute='set_age_group')
     patient_name = fields.Char(string="name")
     patient_age = fields.Integer('age',track_visibility='always')
@@ -19,9 +18,16 @@ class HospitalPatient(models.Model):
     patient_email = fields.Char(string="Email")
     appointment_count =fields.Integer(string='Appointment',compute='get_appointment_count')
     image = fields.Binary(string='image',attechment=True)
-    patient_gender = fields.Selection([('Male', 'Male'),
-                                       ('Female', 'Female')])
+    gender = fields.Selection([('male', 'male'),('female', 'female')],string='Patient Gender')
 
+    doctor_gender = fields.Char(string='Doctor Gender')
+
+    doctor_id = fields.Many2one('hospital.doctor', string='Doctor')
+
+    @api.onchange('doctor_id')
+    def Select_gander(self):
+        if self.doctor_id:
+            self.doctor_gender = self.doctor_id.doctor_gender
 
     @api.multi
     def print_report(self):
@@ -95,6 +101,7 @@ class HospitalPatient(models.Model):
     def get_appointment_count(self):
         count=self.env['hospital.appointment'].search_count([('patient_id','=',self.id)])
         self.appointment_count = count
+
 
     # state = fields.Selection([
     #         ('draft', 'draft'),

@@ -1,3 +1,1 @@
-from . import report_xlsx
-from . import report
-from . import appoitment_pdf
+from . import report,doctor,appoitment_pdf,report_xlsx

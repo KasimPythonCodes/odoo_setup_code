@@ -17,6 +17,7 @@
             'reports/appointment_pdf.xml',
             'reports/report_xlsx.xml',
             'reports/sales_report_inherit.xml',
+            'reports/doctor.xml',
             'data/sequence.xml',
             'data/email_templates.xml',
             'data/appointment.xml',

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!--start inherit res.company-->
+      <record id="res_company_inherit" model="ir.ui.view">
+            <field name="name">res.company.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <field name="name">
+                    <attribute name="required">0</attribute>
+                </field>
+            </field>
+      </record>
+<!--end inherit res.company-->
+
+
+    <record id="action_company" model="ir.actions.act_window">
+        <field name="name">Company</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.company</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+
+            <p class="o_view_nocontent_smiling_face">Create your First Company Registration!</p>
+        </field>
+    </record>
+    
+
+    <menuitem id="company_root" name="Company" sequence="2"/>
+<menuitem id="Base_Company" name="Company" parent="company_root" action="action_company" sequence="0"/>
+
+</odoo>

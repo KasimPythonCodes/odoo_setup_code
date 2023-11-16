@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner,access.res.partner,model_res_partner,,1,1,1,1
+access_user_parameter,access.user.parameter,model_user_parameter,,1,1,1,1
+access_res_company,access.res.company,model_res_company,,1,1,1,1

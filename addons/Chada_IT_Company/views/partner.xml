@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!--start inherit res.company-->
+      <record id="res_partner_inherit" model="ir.ui.view">
+            <field name="name">res.partner.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="name">
+                    <attribute name="required">0</attribute>
+                </field>
+            </field>
+      </record>
+<!--end inherit res.company-->
+
+
+    <record id="action_partner" model="ir.actions.act_window">
+        <field name="name">Partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+
+            <p class="o_view_nocontent_smiling_face">Create your First partner Company !</p>
+        </field>
+    </record>
+<menuitem id="Partner_Company" name="Vendor" parent="company_root" action="action_partner" sequence="1"/>
+
+</odoo>

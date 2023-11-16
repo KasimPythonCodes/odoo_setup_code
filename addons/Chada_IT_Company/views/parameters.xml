@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!--start  User Parameter tree-->
+      <record id="user_parameter" model="ir.ui.view">
+            <field name="name">user.parameter.tree</field>
+            <field name="model">user.parameter</field>
+            <field name="arch" type="xml">
+                <tree string="Parameters" editable="bottom">
+                    <field name="parameter_name"/>
+                    <field name="parameter_value"/>
+                </tree>
+            </field>
+      </record>
+<!--end  User Parameter tree-->
+
+
+<!--     &lt;!&ndash;start  User Parameter Form&ndash;&gt;-->
+<!--      <record id="user_parameter" model="ir.ui.view">-->
+<!--            <field name="name">user.parameter.form</field>-->
+<!--            <field name="model">user.parameter</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                    <field name="parameter_name"/>-->
+<!--                    <field name="parameter_value"/>-->
+<!--            </field>-->
+<!--      </record>-->
+<!--&lt;!&ndash;end  User Parameter Form&ndash;&gt;-->
+
+
+    <record id="action_parameter" model="ir.actions.act_window">
+        <field name="name">Parameters</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">user.parameter</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your First Parameter !</p>
+        </field>
+    </record>
+<menuitem id="Base_Parameter" name="Parameters" parent="company_root" action="action_parameter" sequence="2"/>
+</odoo>

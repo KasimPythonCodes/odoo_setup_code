@@ -20,6 +20,7 @@ class HospitalAppointment(models.Model):
     pharmacy_notes = fields.Text(string="Pharmacy Note",)
     appointment_lines = fields.One2many('hospital.appointment.lines', 'appointment_id', string='Appointment Lines')
     appointment_date = fields.Date(string="Date",)
+    appointment_total_amount = fields.Integer(string="Total Amount",)
     state = fields.Selection([
             ('draft', 'Draft'),
             ('confirm', 'Confirm'),

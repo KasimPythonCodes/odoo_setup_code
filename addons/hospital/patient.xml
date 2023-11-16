@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!--start inherit sale order -->
-<!--      <record id="sale_order_inherit" model="ir.ui.view">-->
-<!--            <field name="name">sale.order.inherit</field>-->
-<!--            <field name="model">sale.order</field>-->
-<!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--            <field name="partner_id" position="after">-->
-<!--                <field name="patient_name"/>-->
-<!--            </field>-->
-<!--        </field>-->
-<!--        </record>-->
-<!--end inherit sale order -->
+<!--start inherit sale order-->
+      <record id="sale_order_inherit" model="ir.ui.view">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="patient_name"/>
+            </field>
+        </field>
+        </record>
+<!--end inherit sale order-->
 
      <!--action to open the appointments of the patient-->
     <record id="open_patient_appointment" model="ir.actions.act_window">
@@ -51,18 +51,30 @@
 <!--    MYCODE -->
 
         <record model="ir.ui.view" id="patient_kanban">
-            <field name="name">hospital.patient.kanbar</field>
+            <field name="name">hospital.patient.kanban</field>
             <field name="model">hospital.patient</field>
             <field name="arch" type="xml">
                 <kanban default_group_by="doctor_id">
-                  <field name="patient_name"/>
-                  <field name="patient_age"/>
+                    <field name="sequence"/>
+                    <field class="im_id" name="image" widget='image'/>
+                    <field name="patient_name"/>
+                    <field name="patient_age"/>
+                    <field name="patient_email"/>
+                    <field name="gender"/>
+                    <field name="notes"/>
+<!--                  <field name="patient_name"/>-->
+<!--                  <field name="patient_age"/>-->
                   <templates>
                     <t t-name="kanban-box">
                       <div class="oe_module_vignette oe_kanban_global_click oe_kanban_record_has_image_fill o_hospital_patient_kanban">
                         <ul>
-                            <li>Age: <field name="patient_age"/></li>
-                            <li>ID: <field name="patient_name"/></li>
+                            <li>Sequence:<field name="sequence"/></li>
+                            <li>Patient Image:<field class="im_id" name="image" widget='image'/></li>
+                            <li>Patient Name:<field name="patient_name"/></li>
+                            <li>Patient Age:<field name="patient_age"/></li>
+                            <li>Patient Email:<field name="patient_email"/></li>
+                            <li>Patient Gender:<field name="gender"/></li>
+                            <li>Patient Notes:<field name="notes"/></li>
                         </ul>
                         </div>
                     </t>
